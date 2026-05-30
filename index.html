@@ -591,18 +591,17 @@ overlay.addEventListener('click', () => {
 // 1. Wait for the page to fully load
 document.addEventListener('DOMContentLoaded', function() {
   
-  // 2. Initialize CounterAPI with your unique Workspace Name
-  const counter = new Counter({ workspace: "Lix's Profile" });
+  // 2. Initialize CounterAPI with your exact Workspace Name in quotes
+  const counter = new Counter({ workspace: "LixProfile" });
 
-  // 3. Find the element in your HTML where you want the number to appear
+  // 3. Find the element in your HTML
   const displayElement = document.getElementById('views');
 
-  // 4. "Up" tells the API to increment the count and return the new total
-  // Replace 'YOUR_SLUG' with the name you gave your counter
+  // 4. Increment the counter 'Lix'
   counter.up('Lix')
     .then(result => {
-      // 5. This takes the number from the API and puts it inside your HTML tag
-      displayElement.textContent = result.value;
+      // 5. Update the text using .count
+      displayElement.textContent = result.count;
     })
     .catch(error => {
       console.error('Counter error:', error);
