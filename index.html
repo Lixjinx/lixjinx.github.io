@@ -5,6 +5,7 @@
 <title>Lix</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/counterapi/dist/counter.browser.min.js"></script>
 <style>
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -446,7 +447,7 @@ body {
 
 <div class="views">
   <svg viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C20.27 7.61 17 4.5 12 4.5z"/></svg>
-  0
+  <span id="views">0</span>
 </div>
 
 <div class="player-glow" id="playerGlow">
@@ -586,6 +587,26 @@ overlay.addEventListener('click', () => {
       setIcon(true);
     }).catch(() => {});
   }
+});
+// 1. Wait for the page to fully load
+document.addEventListener('DOMContentLoaded', function() {
+  
+  // 2. Initialize CounterAPI with your unique Workspace Name
+  const counter = new Counter({ workspace: "Lix's Profile" });
+
+  // 3. Find the element in your HTML where you want the number to appear
+  const displayElement = document.getElementById('views');
+
+  // 4. "Up" tells the API to increment the count and return the new total
+  // Replace 'YOUR_SLUG' with the name you gave your counter
+  counter.up('Lix')
+    .then(result => {
+      // 5. This takes the number from the API and puts it inside your HTML tag
+      displayElement.textContent = result.value;
+    })
+    .catch(error => {
+      console.error('Counter error:', error);
+    });
 });
 </script>
 </body>
