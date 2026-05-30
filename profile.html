@@ -587,31 +587,14 @@ overlay.addEventListener('click', () => {
     }).catch(() => {});
   }
 });
-// ── View counter ────────────────────────────────────────────────────────────
-// Uses a hidden <img> to hits.sh — works on GitHub Pages, never blocked by
-// ad blockers because it loads an image not a JS API.
-// The count is stored server-side at hits.sh and persists across all visitors.
-(function () {
-  // hidden tracking pixel — increments the counter on every page load
-  var tracker = new Image();
-  tracker.src = 'https://hits.sh/lixjinx.github.io/';
-
-  // fetch the JSON endpoint to read the current count and display it
-  fetch('https://hits.sh/lixjinx.github.io.json')
-    .then(function (r) { return r.json(); })
-    .then(function (d) {
-      var count = d.count != null ? d.count
-                : d.value != null ? d.value
-                : d.hits  != null ? d.hits
-                : null;
-      if (count != null) {
-        document.getElementById('views').textContent = count;
-      }
-    })
-    .catch(function () {
-      document.getElementById('views').textContent = '—';
-    });
-})();
+// ── View counter via Abacus API ─────────────────────────────────────────────
+// Loaded as a plain <script> tag with a JSONP callback — no fetch(), no CORS
+// issues, not blocked by ad blockers. Auto-creates the counter on first visit.
+function _vc(r) {
+  var el = document.getElementById('views');
+  if (el && r && r.value != null) el.textContent = r.value;
+}
 </script>
+<script async src="https://abacus.jasoncameron.dev/hit/lixjinx.github.io/visits?callback=_vc"></script>
 </body>
 </html>
