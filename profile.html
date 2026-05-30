@@ -5,7 +5,6 @@
 <title>Lix</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
 <style>
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -447,7 +446,7 @@ body {
 
 <div class="views">
   <svg viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C20.27 7.61 17 4.5 12 4.5z"/></svg>
-  <span id="views">0</span>
+  <span id="views">...</span>
 </div>
 
 <div class="player-glow" id="playerGlow">
@@ -588,15 +587,31 @@ overlay.addEventListener('click', () => {
     }).catch(() => {});
   }
 });
-// View counter using countapi.xyz — increments once per visit
-fetch('https://api.countapi.xyz/hit/lixjinx.github.io/visits')
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById('views').textContent = data.value;
-  })
-  .catch(() => {
-    // silently fail if offline — keep showing 0
-  });
+// ── View counter ────────────────────────────────────────────────────────────
+// Uses a hidden <img> to hits.sh — works on GitHub Pages, never blocked by
+// ad blockers because it loads an image not a JS API.
+// The count is stored server-side at hits.sh and persists across all visitors.
+(function () {
+  // hidden tracking pixel — increments the counter on every page load
+  var tracker = new Image();
+  tracker.src = 'https://hits.sh/lixjinx.github.io/';
+
+  // fetch the JSON endpoint to read the current count and display it
+  fetch('https://hits.sh/lixjinx.github.io.json')
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      var count = d.count != null ? d.count
+                : d.value != null ? d.value
+                : d.hits  != null ? d.hits
+                : null;
+      if (count != null) {
+        document.getElementById('views').textContent = count;
+      }
+    })
+    .catch(function () {
+      document.getElementById('views').textContent = '—';
+    });
+})();
 </script>
 </body>
 </html>
