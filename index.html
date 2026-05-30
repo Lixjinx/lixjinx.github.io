@@ -117,81 +117,117 @@ body {
   text-shadow:0 0 18px rgba(255,255,255,0.7),0 0 40px rgba(255,255,255,0.35),0 0 80px rgba(255,255,255,0.15);
 }
 
-.sep {
-  width:28px; height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent);
-  margin:24px 0 20px;
-  opacity:0;
-  animation:ghostIn 1.5s 0.48s cubic-bezier(0.16,1,0.3,1) forwards;
-}
-
+/* ── Floating social buttons ── */
 .socials {
-  display:flex; align-items:center; gap:9px;
-  opacity:0;
-  animation:ghostIn 1.5s 0.58s cubic-bezier(0.16,1,0.3,1) forwards;
+  position: fixed;
+  bottom: 20px;       /* Adjusted to match the visual level of your "views" pill */
+  right: 22px;        /* Moves them to the right side */
+  z-index: 35;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  opacity: 0;
+  animation: ghostIn 1.5s 0.65s cubic-bezier(0.16,1,0.3,1) forwards;
 }
 
 .s-btn {
-  width:43px; height:43px; border-radius:10px;
-  display:flex; align-items:center; justify-content:center;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.09);
-  text-decoration:none; color:rgba(255,255,255,0.65);
-  position:relative; overflow:hidden;
-  
-  /* Fixed for tilt conflict */
-  transition: 
-    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    color 0.25s ease,
-    border-color 0.25s ease,
-    box-shadow 0.35s ease;
-  
-  will-change: transform;
-  backface-visibility: hidden;
-  transform-style: flat;   /* Important fix */
+  position: relative;
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none;
+  color: rgba(255,255,255,0.7);
+  overflow: hidden;
+
+  /* frosted glass — matches the music player */
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255,255,255,0.1);
+
+  /* outer white glow */
+  box-shadow:
+    0 0 10px rgba(255,255,255,0.06),
+    0 0 24px rgba(255,255,255,0.03),
+    0 4px 16px rgba(0,0,0,0.4);
+
+  transition:
+    transform 0.28s cubic-bezier(0.34,1.56,0.64,1),
+    color 0.2s ease,
+    box-shadow 0.25s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
+/* top-edge shimmer */
 .s-btn::before {
-  content:''; 
-  position:absolute; 
-  inset:0;
-  background:linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
-  opacity:0; 
-  transition: opacity 0.4s ease;
-  border-radius:inherit;
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.22s ease;
+  border-radius: inherit;
 }
 
-.s-btn:hover { 
-  transform: translateY(-3px) scale(1.06); 
-  color: #fff; 
-  border-color: rgba(255,255,255,0.3); 
-  box-shadow: 0 0 15px rgba(255,255,255,0.15), 0 10px 25px rgba(0,0,0,0.5);
+.s-btn:hover {
+  transform: translateY(-5px) scale(1.1);
+  color: #fff;
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.22);
+  box-shadow:
+    0 0 18px rgba(255,255,255,0.2),
+    0 0 40px rgba(255,255,255,0.08),
+    0 8px 24px rgba(0,0,0,0.5);
 }
 
-.s-btn:hover::before { 
-  opacity: 1; 
-}
+.s-btn:hover::before { opacity: 1; }
 
 .s-btn:active {
-  transform: translateY(-1px) scale(0.97);
-  transition: transform 0.1s ease;
+  transform: translateY(-2px) scale(1.04);
 }
 
-.s-btn svg { 
-  width:19px; height:19px; 
-  fill:currentColor; 
-  position:relative; 
-  z-index:1; 
+.s-btn svg {
+  width: 20px; height: 20px;
+  fill: currentColor;
+  position: relative; z-index: 1;
+  /* icon glow */
+  filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
 }
 
 .views {
-  position:fixed; bottom:16px; left:20px; z-index:20;
-  display:flex; align-items:center; gap:5px;
-  font-size:12px; font-weight:300; color:rgba(255,255,255,0.2);
-  letter-spacing:0.06em; opacity:0;
+  position:fixed; bottom:20px; left:22px; z-index:20;
+  display:flex; align-items:center; gap:6px;
+  padding:5px 11px 5px 8px;
+  /* frosted glass pill — same style as the player */
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 999px;
+  /* outer white glow */
+  box-shadow:
+    0 0 10px rgba(255,255,255,0.05),
+    0 0 22px rgba(255,255,255,0.03),
+    0 2px 12px rgba(0,0,0,0.3);
+  opacity:0;
   animation:ghostIn 2s 1.2s ease forwards;
 }
-.views svg { width:13px; height:13px; fill:currentColor; }
+.views svg {
+  width:12px; height:12px; fill:currentColor;
+  color: rgba(255,255,255,0.5);
+  /* glow on the eye icon */
+  filter: drop-shadow(0 0 4px rgba(255,255,255,0.4));
+}
+.views span {
+  font-size:11px; font-weight:400;
+  letter-spacing:0.08em;
+  color: rgba(255,255,255,0.7);
+  /* soft white text glow */
+  text-shadow:
+    0 0 6px rgba(255,255,255,0.6),
+    0 0 16px rgba(255,255,255,0.25);
+}
 
 /* ═══════════════════════════════════════
    FLOATING PLAYER
@@ -430,18 +466,19 @@ body {
   </div>
   <div class="username">Lix</div>
   <div class="bio">For God so loved the world, that He gave His only begotten Son, that whosoever believeth in Him should not perish, but have everlasting life.</div>
-  <div class="sep"></div>
-  <div class="socials">
-    <a class="s-btn" href="https://roblox.com/users/1600286606/profile" target="_blank" title="Roblox">
-      <svg viewBox="0.16 0 23.68 24"><path d="M5.164 0L.16 18.928L18.836 24L23.84 5.072Zm8.747 15.354l-5.219-1.417 1.399-5.29 5.22 1.418-1.4 5.29z"/></svg>
-    </a>
-    <a class="s-btn" href="https://www.miruro.tv/watch/108465/mushoku-tensei-jobless-reincarnation?ep=1" target="_blank" title="Link">
-      <svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5"/></svg>
-    </a>
-    <a class="s-btn" href="https://discord.com/users/800002982611648552" target="_blank" title="Discord">
-      <svg viewBox="1.96 4.26 20.03 15.53"><path d="M14.82 4.26a10.14 10.14 0 0 0-.53 1.1 14.66 14.66 0 0 0-4.58 0 10.14 10.14 0 0 0-.53-1.1 16 16 0 0 0-4.13 1.3 17.33 17.33 0 0 0-3 11.59 16.6 16.6 0 0 0 5.07 2.59A12.89 12.89 0 0 0 8.23 18a9.65 9.65 0 0 1-1.71-.83 3.39 3.39 0 0 0 .42-.33 11.66 11.66 0 0 0 10.12 0q.21.18.42.33a10.84 10.84 0 0 1-1.71.84 12.41 12.41 0 0 0 1.08 1.78 16.44 16.44 0 0 0 5.06-2.59 17.22 17.22 0 0 0-3-11.59 16.09 16.09 0 0 0-4.09-1.35zM8.68 14.81a1.94 1.94 0 0 1-1.8-2 1.93 1.93 0 0 1 1.8-2 1.93 1.93 0 0 1 1.8 2 1.93 1.93 0 0 1-1.8 2zm6.64 0a1.94 1.94 0 0 1-1.8-2 1.93 1.93 0 0 1 1.8-2 1.92 1.92 0 0 1 1.8 2 1.92 1.92 0 0 1-1.8 2z"/></svg>
-    </a>
-  </div>
+</div>
+
+<!-- Floating social buttons — outside tilt, fixed centre-bottom of profile -->
+<div class="socials">
+  <a class="s-btn" href="https://roblox.com/users/1600286606/profile" target="_blank" title="Roblox">
+    <svg viewBox="0.16 0 23.68 24"><path d="M5.164 0L.16 18.928L18.836 24L23.84 5.072Zm8.747 15.354l-5.219-1.417 1.399-5.29 5.22 1.418-1.4 5.29z"/></svg>
+  </a>
+  <a class="s-btn" href="https://www.miruro.tv/watch/108465/mushoku-tensei-jobless-reincarnation?ep=1" target="_blank" title="Mushoku Tensei">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+  </a>
+  <a class="s-btn" href="https://discord.com/users/800002982611648552" target="_blank" title="Discord">
+    <svg viewBox="1.96 4.26 20.03 15.53"><path d="M14.82 4.26a10.14 10.14 0 0 0-.53 1.1 14.66 14.66 0 0 0-4.58 0 10.14 10.14 0 0 0-.53-1.1 16 16 0 0 0-4.13 1.3 17.33 17.33 0 0 0-3 11.59 16.6 16.6 0 0 0 5.07 2.59A12.89 12.89 0 0 0 8.23 18a9.65 9.65 0 0 1-1.71-.83 3.39 3.39 0 0 0 .42-.33 11.66 11.66 0 0 0 10.12 0q.21.18.42.33a10.84 10.84 0 0 1-1.71.84 12.41 12.41 0 0 0 1.08 1.78 16.44 16.44 0 0 0 5.06-2.59 17.22 17.22 0 0 0-3-11.59 16.09 16.09 0 0 0-4.09-1.35zM8.68 14.81a1.94 1.94 0 0 1-1.8-2 1.93 1.93 0 0 1 1.8-2 1.93 1.93 0 0 1 1.8 2 1.93 1.93 0 0 1-1.8 2zm6.64 0a1.94 1.94 0 0 1-1.8-2 1.93 1.93 0 0 1 1.8-2 1.92 1.92 0 0 1 1.8 2 1.92 1.92 0 0 1-1.8 2z"/></svg>
+  </a>
 </div>
 
 <div class="views">
